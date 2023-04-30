@@ -1,5 +1,8 @@
 # TeachingTools
 
+Package of tools for those teaching or those being taught.
+
+Quiz.py
 This program will quiz you on whatever questions you place in the quiz bank.  
 Acceptable question types are multiple choice, fill-in-the-blank, and True/False.  Multiple choice questions will have randomly-sorted answers.
 
