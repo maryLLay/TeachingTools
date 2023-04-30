@@ -12,14 +12,18 @@ right = 0
 wrong = 0
 
 #Open and read csv file
-myfile = r'/Users/your/path/here.csv'
+myfile = input("Please enter the full file path to your .csv quiz file: ")
+while not path.isfile(myfile):
+    print("That is not a valid file path")
+    myfile = input("Please enter the full file path to your .csv quiz file: ")
+    
 with open(myfile) as datafile:
     datareader = csv.reader(datafile)
     data = []
     for row in datareader:
         data.append(row)      
 
-while stop != 'exit':
+while stop != 'exit' and stop != 'quit':
     #Generate random number
     random_int = random.randint(1, len(data)-1)
 
