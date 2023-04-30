@@ -1,7 +1,7 @@
 #Review Quiz
 #assumes csv format: Question, Possible answers (4 columns), Extra Info (chart, example, etc), Answer, Explanation
 #For multiple choice, include a '.' if fewer than 4 answers exist
-#For fill-in-the-blank questions, leave all answer cells blank
+#For fill-in-the-blank questions, put '.' in all Possible answer columns
 
 
 import random
@@ -17,7 +17,7 @@ with open(myfile) as datafile:
     datareader = csv.reader(datafile)
     data = []
     for row in datareader:
-        data.append(row)
+        data.append(row)      
 
 while stop != 'exit':
     #Generate random number
@@ -33,11 +33,22 @@ while stop != 'exit':
     #Generate and shuffle answers
     answers = []
     ans_num = 0
-    for i in range(1, len(row)-2):
-        if data[random_int][i] != '.':
-            answers.append(data[random_int][i])
-    print("Answers = ", answers)
-    random.shuffle(answers)
+    
+    #1. Questions that include extra info
+    if row[5] != '':
+        extra_info = row[5]
+        print(extra_info)
+        print()
+    #2. Questions that are T/F
+    elif row[1] == 'TRUE':
+        answers = ['TRUE', 'FALSE']
+    #3. Questions that are MC or fill-in-the-blank
+    else:
+        for i in range(1, len(row)-3):
+            if data[random_int][i] != '.':
+                answers.append(data[random_int][i])
+        random.shuffle(answers)
+        
     for i, x in enumerate(answers):
         print(f'{i+1}: {x}')
         if x == answer:
@@ -62,8 +73,9 @@ while stop != 'exit':
         wrong +=1
 
     stop = input("Hit Enter to continue, or 'exit' to quit: ")
+    print()
 
 #Calculate score
 totalQs = right + wrong
 pct_right = (right / totalQs)*100
-print(f'You scored {pct_right}%')
+print(f'You answered {totalQs} questions and scored {pct_right}%')
